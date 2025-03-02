@@ -1,0 +1,5 @@
+1. A ledger will have different name for user
+user can crate a group , a timeframe of week , month , year
+on the BE we will create a ledger for each entity
+
+2.Expenses will also be a part of a ledger so we will create 2 collections - User , Ledger
