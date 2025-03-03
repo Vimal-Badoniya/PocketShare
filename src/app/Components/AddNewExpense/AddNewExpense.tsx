@@ -7,6 +7,10 @@ import {
   TRAVEL,
   UTILITIES,
 } from "@/app/Constants/constants";
+import { Transaction } from "@/app/Constants/interfaces";
+import { v4 as uuidv4 } from "uuid";
+import { addExpense } from "@/app/api/ledgers/addExpense";
+import { useParams } from "next/navigation";
 
 export default function AddNewExpense() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -15,12 +19,28 @@ export default function AddNewExpense() {
   const [selectedCategory, setSelectedCategory] = useState(OTHERS);
   const [transactionDate, setTransactionDate] = useState("");
 
+  const params = useParams();
+  const { ledgerId } = params;
+
   function AddNewExpenseButtonHandler() {
     setIsModalOpen(true);
   }
 
-  function handleSaveTransaction() {
+  async function handleSaveTransaction() {
     setIsModalOpen(false);
+    const newExpense: Transaction = {
+      paidBy: "PS1",
+      amount,
+      description,
+      category: selectedCategory,
+      transactionDate,
+      id: uuidv4(),
+    };
+    try {
+      await addExpense(ledgerId as string, newExpense);
+    } catch (error) {
+      console.error("Failed to add expense:", error);
+    }
   }
 
   return (

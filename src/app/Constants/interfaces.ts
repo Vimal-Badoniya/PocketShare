@@ -22,7 +22,7 @@ export interface Ledger {
 export interface Transaction {
   id: string;
   amount: number;
-  transactionDate: number;
+  transactionDate: string;
   description?: string;
   paidBy: string; //user id
   share?: Share[];

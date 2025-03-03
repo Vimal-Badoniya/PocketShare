@@ -38,6 +38,8 @@ const LedgerPage = () => {
     );
   }
 
+  console.log(ledger);
+
   return (
     <div>
       <h1>{ledger.name}</h1>
