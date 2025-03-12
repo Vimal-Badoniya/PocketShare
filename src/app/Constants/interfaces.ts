@@ -7,16 +7,14 @@ export interface User {
 }
 
 export interface Ledger {
-  id: string; //unique id of each ledger
-  createdBy: string; //id of the user who created the ledger
-  name: string; // Budget for March , Kashmir Trip
-  description?: string; //extra notes
-  createdAt: number; //UTC timestamp
-  transactions?: Transaction[];
-  startDate?: number; //Timestamp if ledger is time based - week , month , year
-  endDate?: number;
-  participants?: Participant[]; //Members for sharing the expense
-  ledgerType: string; //GROUP OR TIMEFRAME
+  id: string;
+  createdBy: string;
+  name: string;
+  description?: string;
+  createdAt: number;
+  transactions: Transaction[];
+  participants: Participant[];
+  ledgerType: string;
 }
 
 export interface Transaction {
@@ -41,4 +39,17 @@ export interface Share {
 export interface Participant {
   name: string;
   id: string;
+}
+
+export interface ListItem {
+  id: string;
+  label: string;
+  value: string;
+}
+
+export interface LedgerType {
+  id: string;
+  label: string;
+  value: string;
+  name: string;
 }

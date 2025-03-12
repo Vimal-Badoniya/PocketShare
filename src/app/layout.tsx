@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import ReduxProvider from "./redux/ReduxProvider";
+import GetLedgerList from "./Components/GetLedgerList/GetLedgerList";
 
 export const metadata: Metadata = {
   title: "Pocket Share",
@@ -13,7 +15,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <ReduxProvider>{children}</ReduxProvider>
+        <GetLedgerList />
+      </body>
     </html>
   );
 }

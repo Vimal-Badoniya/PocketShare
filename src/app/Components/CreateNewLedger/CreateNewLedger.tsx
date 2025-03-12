@@ -1,139 +1,54 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
-import Modal from "../common/Modal/Modal";
-import { addLedger } from "@/app/api/ledgers/addLedger";
-import { Participant } from "@/app/Constants/interfaces";
-import { TIMEFRAME } from "@/app/Constants/constants";
+import { LEDGER_TYPE } from "@/app/Constants/constants";
+import Messages from "@/app/Constants/messages";
+import styles from "./CreateNewLedger.module.css";
+import NewLedgerModal from "./NewLedgerModal/NewLedgerModal";
+import { useDispatch } from "react-redux";
+import { addNewLedgerField } from "@/app/redux/slices/newLedgerSlice";
 
-interface CreateNewLedgerProps {
-  ledgerLabel: string;
-}
-
-export default function CreateNewLedger({ ledgerLabel }: CreateNewLedgerProps) {
+export default function CreateNewLedger() {
   const [isOpen, setisOpen] = useState(false);
-  const [ledgerName, setLedgerName] = useState("");
-  const [ledgerDescription, setLedgerDescription] = useState("");
-  const [ledgerTimeFrame, setLedgerTimeFrame] = useState("monthly");
-  const [ledgerMonth, setLedgerMonth] = useState("");
-  const [participantName, setParticipantName] = useState("");
-  const [participants, setParticipants] = useState<Participant[]>([]);
-  const router = useRouter();
+  const dispatch = useDispatch();
 
   function CreateNewLedgerHandler() {
     console.log("Button clicked");
     setisOpen(true);
   }
 
-  const handleAddParticipant = () => {
-    if (participantName.trim()) {
-      setParticipants([
-        ...participants,
-        { name: participantName, id: new Date().getTime().toString() },
-      ]);
-      setParticipantName("");
-    }
-  };
-
-  const handleSaveLedger = async () => {
-    const newLedger = {
-      createdBy: "PS1",
-      name: ledgerName,
-      description: ledgerDescription,
-      createdAt: Date.now(),
-      participants,
-      ledgerType: TIMEFRAME,
-    };
-
-    try {
-      const ledgerId = await addLedger(newLedger);
-      console.log("New Ledger:", newLedger);
-      setisOpen(false);
-      router.push(`/ledger/${ledgerId}`);
-    } catch (error) {
-      console.error("Error saving ledger:", error);
-    }
-  };
+  function handleModalClose() {
+    setisOpen(false);
+  }
 
   return (
     <>
-      <button onClick={CreateNewLedgerHandler}>{ledgerLabel}</button>
-      <Modal
-        isOpen={isOpen}
-        onClose={() => {
-          setisOpen(false);
-        }}
-      >
+      <div className={styles.labelAndDropdownWrapper}>
+        <div>{Messages.createNewExpensePlanFor}</div>
         <div>
-          <div>NEW LEDGER</div>
-
-          <div>
-            <label htmlFor="ledgerName">Ledger Name</label>
-            <input
-              type="text"
-              id="ledgerName"
-              value={ledgerName}
-              onChange={(e) => setLedgerName(e.target.value)}
-            />
-          </div>
-
-          <div>
-            <label htmlFor="ledgerDescription">Description</label>
-            <input
-              type="text"
-              id="ledgerDescription"
-              value={ledgerDescription}
-              onChange={(e) => setLedgerDescription(e.target.value)}
-            />
-          </div>
-
-          <div>
-            <label htmlFor="ledgerTimeFrame">
-              Choose Timeframe (Weekly,Monthly,Yearly)
-            </label>
-            <select
-              id="ledgerTimeFrame"
-              value={ledgerTimeFrame}
-              onChange={(e) => setLedgerTimeFrame(e.target.value)}
-            >
-              <option value="weekly">Weekly</option>
-              <option value="monthly">Monthly</option>
-              <option value="yearly">Yearly</option>
-            </select>
-          </div>
-
-          <div>
-            <label htmlFor="ledgerMonth">Select Month</label>
-            <input
-              type="month"
-              id="ledgerMonth"
-              value={ledgerMonth}
-              onChange={(e) => setLedgerMonth(e.target.value)}
-            />
-          </div>
-
-          <div>
-            <label htmlFor="ledgerParticipants">Add Participants</label>
-            <input
-              type="text"
-              id="ledgerParticipants"
-              value={participantName}
-              onChange={(e) => setParticipantName(e.target.value)}
-            />
-            <button onClick={handleAddParticipant}>Add</button>
-          </div>
-
-          <ul>
-            {participants.map((participant) => (
-              <li key={participant.id}>{participant.name}</li>
+          <select
+            defaultValue={LEDGER_TYPE[0].value}
+            onChange={(e) => {
+              dispatch(
+                addNewLedgerField({
+                  fieldType: "ledgerType",
+                  value: e.target.value,
+                })
+              );
+            }}
+          >
+            {LEDGER_TYPE.map((ledgerType) => (
+              <option key={ledgerType.id} value={ledgerType.value}>
+                {ledgerType.label}
+              </option>
             ))}
-          </ul>
-
-          <button onClick={handleSaveLedger}>Save</button>
-          <button onClick={() => setisOpen(false)}>Close</button>
+          </select>
         </div>
-      </Modal>
+      </div>
+
+      <button onClick={CreateNewLedgerHandler}>Create</button>
+
+      {isOpen && <NewLedgerModal onModalClose={handleModalClose} />}
     </>
   );
 }

@@ -7,9 +7,12 @@ import { doc, getDoc } from "firebase/firestore";
 import { db } from "@/app/db/firebase/firebase";
 import { Ledger } from "@/app/Constants/interfaces";
 import AddNewExpense from "@/app/Components/AddNewExpense/AddNewExpense";
+import { LEDGERS_DB } from "@/app/Constants/constants";
 
 const LedgerPage = () => {
   const params = useParams();
+  console.log(params);
+  console.log("on params page");
 
   const { ledgerId } = params;
   const [ledger, setLedger] = useState<Ledger | null>(null);
@@ -17,7 +20,7 @@ const LedgerPage = () => {
   useEffect(() => {
     const fetchLedger = async () => {
       if (ledgerId) {
-        const docRef = doc(db, "ledgers", ledgerId as string);
+        const docRef = doc(db, LEDGERS_DB, ledgerId as string);
         const docSnap = await getDoc(docRef);
         if (docSnap.exists()) {
           setLedger({ id: docSnap.id, ...docSnap.data() } as Ledger);
