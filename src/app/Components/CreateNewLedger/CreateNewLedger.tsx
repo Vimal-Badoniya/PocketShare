@@ -13,7 +13,6 @@ export default function CreateNewLedger() {
   const dispatch = useDispatch();
 
   function CreateNewLedgerHandler() {
-    console.log("Button clicked");
     setisOpen(true);
   }
 

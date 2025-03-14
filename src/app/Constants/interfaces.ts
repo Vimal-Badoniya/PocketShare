@@ -15,6 +15,7 @@ export interface Ledger {
   transactions: Transaction[];
   participants: Participant[];
   ledgerType: string;
+  imgUrl: "";
 }
 
 export interface Transaction {

@@ -11,9 +11,6 @@ import { LEDGERS_DB } from "@/app/Constants/constants";
 
 const LedgerPage = () => {
   const params = useParams();
-  console.log(params);
-  console.log("on params page");
-
   const { ledgerId } = params;
   const [ledger, setLedger] = useState<Ledger | null>(null);
 
@@ -25,7 +22,7 @@ const LedgerPage = () => {
         if (docSnap.exists()) {
           setLedger({ id: docSnap.id, ...docSnap.data() } as Ledger);
         } else {
-          console.log("No such document!");
+          console.error("No such document!");
         }
       }
     };
@@ -40,8 +37,6 @@ const LedgerPage = () => {
       </div>
     );
   }
-
-  console.log(ledger);
 
   return (
     <div>

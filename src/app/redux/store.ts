@@ -1,9 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
 import newLedgerReducer from "./slices/newLedgerSlice";
+import ledgerListReducer from "./slices/ledgerListSlice";
 
 const store = configureStore({
   reducer: {
     newLedger: newLedgerReducer,
+    ledgerList: ledgerListReducer,
   },
 });
 

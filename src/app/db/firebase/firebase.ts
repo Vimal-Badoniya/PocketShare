@@ -1,5 +1,5 @@
 import { initializeApp, getApps } from "firebase/app";
-import { collection, getDocs, getFirestore } from "firebase/firestore";
+import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -16,15 +16,3 @@ if (!getApps().length) {
 }
 
 export const db = getFirestore();
-
-export async function testFirestore() {
-  try {
-    const snapshot = await getDocs(collection(db, "users"));
-    console.log(
-      "Firestore connectivity test successful. Number of documents:",
-      snapshot
-    );
-  } catch (error) {
-    console.error("Error connecting to Firestore:", error);
-  }
-}

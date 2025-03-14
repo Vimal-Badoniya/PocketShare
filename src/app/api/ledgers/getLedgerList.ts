@@ -7,8 +7,8 @@ export default async function getLedgerList() {
   try {
     const ledgerListRef = await getDocs(collection(db, LEDGERS_DB));
     const ledgerList: Ledger[] = ledgerListRef.docs.map((doc) => ({
-      id: doc.id,
       ...doc.data(),
+      id: doc?.id,
     })) as Ledger[];
     return ledgerList;
   } catch (error) {

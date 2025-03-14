@@ -12,7 +12,6 @@ export async function addExpense(
     await updateDoc(ledgerRef, {
       transactions: arrayUnion(transaction),
     });
-    console.log("Expense added to ledger with ID:", ledgerId);
   } catch (error) {
     console.error("Error adding expense:", error);
     throw error;
