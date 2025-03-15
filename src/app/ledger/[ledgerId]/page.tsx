@@ -1,33 +1,22 @@
 "use client";
 
 import { useParams } from "next/navigation";
-
 import { useEffect, useState } from "react";
-import { doc, getDoc } from "firebase/firestore";
-import { db } from "@/app/db/firebase/firebase";
 import { Ledger } from "@/app/Constants/interfaces";
 import AddNewExpense from "@/app/Components/AddNewExpense/AddNewExpense";
-import { LEDGERS_DB } from "@/app/Constants/constants";
+import { useSelector } from "react-redux";
+import { RootState } from "@/app/redux/store";
 
 const LedgerPage = () => {
-  const params = useParams();
-  const { ledgerId } = params;
+  const { ledgerId } = useParams();
   const [ledger, setLedger] = useState<Ledger | null>(null);
 
+  const allLedgers = useSelector((state: RootState) => state?.ledgerList);
+
   useEffect(() => {
-    const fetchLedger = async () => {
-      if (ledgerId) {
-        const docRef = doc(db, LEDGERS_DB, ledgerId as string);
-        const docSnap = await getDoc(docRef);
-        if (docSnap.exists()) {
-          setLedger({ id: docSnap.id, ...docSnap.data() } as Ledger);
-        } else {
-          console.error("No such document!");
-        }
-      }
-    };
-    fetchLedger();
-  }, [ledgerId]);
+    const selectedLedger = allLedgers?.find((ledger) => ledger.id === ledgerId);
+    if (selectedLedger) setLedger(selectedLedger);
+  }, [allLedgers, ledgerId]);
 
   if (!ledger) {
     return (

@@ -1,4 +1,4 @@
-import { Ledger, LedgerType, ListItem } from "./interfaces";
+import { Ledger, LedgerType, ListItem, Transaction } from "./interfaces";
 import { FaPlaneDeparture } from "react-icons/fa";
 import { FaRegCalendarCheck } from "react-icons/fa";
 
@@ -49,6 +49,15 @@ export const DEFAULT_EMPTY_LEDGER: Ledger = {
   transactions: [],
   participants: [],
   imgUrl: "",
+};
+
+export const DEFAULT_EMPTY_TRANSACTION: Transaction = {
+  id: "",
+  paidBy: "",
+  amount: 0,
+  description: "",
+  category: OTHERS,
+  transactionDate: "0",
 };
 
 export const LEDGERS_DB = "ledgers";

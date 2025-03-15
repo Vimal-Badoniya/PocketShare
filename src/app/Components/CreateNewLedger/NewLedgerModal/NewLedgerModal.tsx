@@ -20,7 +20,6 @@ export default function NewLedgerModal({ onModalClose }: NewLedgerModalProps) {
   const dispatch = useDispatch();
 
   const newLedgerDetails = useSelector((state: RootState) => state?.newLedger);
-  console.log(newLedgerDetails);
 
   const [participantName, setParticipantName] = useState("");
 
