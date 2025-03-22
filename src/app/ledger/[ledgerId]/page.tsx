@@ -1,11 +1,14 @@
 "use client";
 
 import { useParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Ledger } from "@/app/Constants/interfaces";
 import AddNewExpense from "@/app/Components/AddNewExpense/AddNewExpense";
 import { useSelector } from "react-redux";
 import { RootState } from "@/app/redux/store";
+import styles from "./page.module.css";
+import { LEDGER_TYPE_ICON } from "@/app/Constants/constants";
+import Messages from "@/app/Constants/messages";
 
 const LedgerPage = () => {
   const { ledgerId } = useParams();
@@ -18,31 +21,102 @@ const LedgerPage = () => {
     if (selectedLedger) setLedger(selectedLedger);
   }, [allLedgers, ledgerId]);
 
+  const totalExpense = useMemo(() => {
+    let total = 0;
+    ledger?.transactions?.forEach((trans) => {
+      total += trans?.amount;
+    });
+    return total;
+  }, [ledger]);
+
   if (!ledger) {
     return (
       <div>
-        Loading...
-        <button>Add New Expense</button>
+        {Messages.loading}
+        <AddNewExpense />
       </div>
     );
   }
 
+  console.log(ledger);
+
+  const formatDate = (dateString = "") => {
+    if (!dateString)
+      return {
+        formattedDate: "",
+        formattedMonth: "",
+      };
+    const date = new Date(dateString);
+    const formattedDate = date.toLocaleDateString("en-GB", {
+      day: "2-digit",
+      month: "short",
+    });
+    const formattedDateArr = formattedDate?.split(" ");
+    return {
+      formattedDate: formattedDateArr[0],
+      formattedMonth: formattedDateArr[1],
+    };
+  };
+
   return (
     <div>
-      <h1>{ledger.name}</h1>
-      <p>{ledger.description}</p>
-      <h2>Participants</h2>
-      <ul>
-        {ledger.participants?.map((participant) => (
-          <li key={participant.id}>{participant.name}</li>
-        ))}
-      </ul>
-      <h2>Transactions</h2>
-      <ul>
-        {ledger.transactions?.map((transaction) => (
-          <li key={transaction?.id}>{transaction?.description}</li>
-        ))}
-      </ul>
+      <div className={styles.headerBg}></div>
+
+      <div className={styles.iconContainer}>
+        <div className={styles.icon}>
+          {
+            LEDGER_TYPE_ICON[
+              ledger?.ledgerType as keyof typeof LEDGER_TYPE_ICON
+            ]
+          }
+        </div>
+      </div>
+
+      <div className={styles.ledgerNameAndTotalContainer}>
+        <div className={styles.ledgerName}>{ledger?.name}</div>
+        <div className={styles.totalExpense}>
+          {Messages.totalExpense} : {totalExpense}
+        </div>
+      </div>
+
+      <div className={styles.expensesContainer}>
+        <h2>Expenses</h2>
+        <div>
+          {ledger.transactions?.map((transaction) => (
+            <div key={transaction?.id} className={styles.expenseWrapper}>
+              <div className={styles.dateContainer}>
+                <div>
+                  {formatDate(transaction?.transactionDate)?.formattedMonth}
+                </div>
+                <div>
+                  {formatDate(transaction?.transactionDate)?.formattedDate}
+                </div>
+              </div>
+
+              <div className={styles.transactionIcon}>
+                {
+                  LEDGER_TYPE_ICON[
+                    ledger?.ledgerType as keyof typeof LEDGER_TYPE_ICON
+                  ]
+                }
+              </div>
+
+              <div>
+                <div className={styles.descriptionText}>
+                  {transaction?.description}
+                </div>
+                <div>{`${transaction?.paidBy} Paid ${transaction?.amount}`}</div>
+              </div>
+
+              <div className={styles.getAndPayStatus}>
+                <div>Get</div>
+                <div>100</div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
       <AddNewExpense />
     </div>
   );

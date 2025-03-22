@@ -1,3 +1,5 @@
+import { ReactNode } from "react";
+
 export interface User {
   id: string; //unique user id
   name: string;
@@ -53,4 +55,18 @@ export interface LedgerType {
   label: string;
   value: string;
   name: string;
+}
+
+export interface ExpenseCategoryType {
+  id: string;
+  label: string;
+  value: string;
+  icon: ReactNode;
+}
+
+export interface DropdownOption {
+  id: string;
+  label: string;
+  value: string;
+  icon: ReactNode;
 }

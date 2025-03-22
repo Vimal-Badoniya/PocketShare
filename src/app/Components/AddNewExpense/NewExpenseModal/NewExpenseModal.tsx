@@ -1,10 +1,4 @@
-import {
-  FOOD,
-  OTHERS,
-  RENT,
-  TRAVEL,
-  UTILITIES,
-} from "@/app/Constants/constants";
+import { EXPENSE_CATEGORY } from "@/app/Constants/constants";
 import Modal from "../../common/Modal/Modal";
 import { useParams } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
@@ -15,6 +9,8 @@ import { addExpense } from "@/app/api/ledgers/addExpense";
 import { v4 as uuidv4 } from "uuid";
 import getLedgerList from "@/app/api/ledgers/getLedgerList";
 import { setLedgerList } from "@/app/redux/slices/ledgerListSlice";
+import Dropdown from "../../common/Dropdown/Dropdown";
+import Messages from "@/app/Constants/messages";
 
 interface AddNewExpenseModalProps {
   onModalClose: () => void;
@@ -89,25 +85,19 @@ export default function NewExpenseModal({
         </div>
 
         <div>
-          <label htmlFor="category">Choose Category</label>
-          <select
-            id="category"
-            value={newExpenseDetails?.category}
-            onChange={(e) =>
+          <label htmlFor="category">{Messages.chooseCategory}</label>
+          <Dropdown
+            options={EXPENSE_CATEGORY}
+            selectedOption={EXPENSE_CATEGORY[0]}
+            onSelect={(value) => {
               dispatch(
                 addNewTransactionField({
                   fieldType: "category",
-                  value: e.target.value,
+                  value: value?.value,
                 })
-              )
-            }
-          >
-            <option value={FOOD}>Food</option>
-            <option value={TRAVEL}>Travel</option>
-            <option value={RENT}>Rent</option>
-            <option value={UTILITIES}>Utilities</option>
-            <option value={OTHERS}>Others</option>
-          </select>
+              );
+            }}
+          />
         </div>
 
         <div>

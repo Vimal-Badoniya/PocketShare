@@ -1,0 +1,11 @@
+.expenseBtn {
+  position: fixed;
+  right: 4rem;
+  bottom: 4rem;
+  padding: 18px;
+  border-radius: 12px;
+  outline: none;
+  border: none;
+  background-color: var(--add-new-bg);
+  cursor: pointer;
+}
