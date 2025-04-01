@@ -49,3 +49,15 @@ a {
     color-scheme: dark;
   }
 }
+
+.backButtonWrapper {
+  display: flex;
+  height: max-content;
+  width: max-content;
+  cursor: pointer;
+}
+
+.backButtonIcon {
+  height: 40px;
+  width: 100px;
+}

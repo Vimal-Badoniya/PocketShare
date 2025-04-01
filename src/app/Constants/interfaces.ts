@@ -48,6 +48,7 @@ export interface ListItem {
   id: string;
   label: string;
   value: string;
+  icon?: ReactNode;
 }
 
 export interface LedgerType {

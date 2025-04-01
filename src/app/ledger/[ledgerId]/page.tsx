@@ -1,17 +1,22 @@
 "use client";
 
-import { useParams } from "next/navigation";
+import { useParams, usePathname, useRouter } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import { Ledger } from "@/app/Constants/interfaces";
 import AddNewExpense from "@/app/Components/AddNewExpense/AddNewExpense";
 import { useSelector } from "react-redux";
 import { RootState } from "@/app/redux/store";
 import styles from "./page.module.css";
-import { LEDGER_TYPE_ICON } from "@/app/Constants/constants";
+import {
+  LEDGER_TAB_OPTIONS,
+  LEDGER_TYPE_ICON,
+} from "@/app/Constants/constants";
 import Messages from "@/app/Constants/messages";
 
 const LedgerPage = () => {
   const { ledgerId } = useParams();
+  const router = useRouter();
+  const pathname = usePathname();
   const [ledger, setLedger] = useState<Ledger | null>(null);
 
   const allLedgers = useSelector((state: RootState) => state?.ledgerList);
@@ -77,6 +82,20 @@ const LedgerPage = () => {
         <div className={styles.totalExpense}>
           {Messages.totalExpense} : {totalExpense}
         </div>
+      </div>
+
+      <div className={styles.tabsWrapper}>
+        {LEDGER_TAB_OPTIONS?.map((tab) => (
+          <div
+            key={tab?.id}
+            className={styles.tab}
+            onClick={() => {
+              router.push(`${pathname}/charts`);
+            }}
+          >
+            {tab?.label}
+          </div>
+        ))}
       </div>
 
       <div className={styles.expensesContainer}>

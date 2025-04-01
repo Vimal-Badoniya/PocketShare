@@ -18,6 +18,9 @@ import { HiOutlineDocumentCurrencyRupee } from "react-icons/hi2";
 import { FaMoneyBillTrendUp } from "react-icons/fa6";
 import { GiFruitBowl } from "react-icons/gi";
 import { RiFolderReceivedLine } from "react-icons/ri";
+import { FaChartPie } from "react-icons/fa";
+import { GrTransaction } from "react-icons/gr";
+import { VscRobot } from "react-icons/vsc";
 
 export const GROUP = "GROUP";
 export const TIMEFRAME = "TIMEFRAME";
@@ -224,3 +227,39 @@ export const DEFAULT_EMPTY_TRANSACTION: Transaction = {
   category: OTHERS,
   transactionDate: "0",
 };
+
+export const LEDGER_TAB_OPTIONS: ListItem[] = [
+  {
+    id: "Charts",
+    label: "Charts",
+    value: "Charts",
+    icon: <FaChartPie />,
+  },
+  {
+    id: "Balances",
+    label: "Balances",
+    value: "Balances",
+    icon: <GrTransaction />,
+  },
+  {
+    id: "Analyse with AI",
+    label: "Analyse with AI",
+    value: "Analyse with AI",
+    icon: <VscRobot />,
+  },
+];
+
+export const CHART_COLORS = [
+  "red",
+  "blue",
+  "brown",
+  "chocolate",
+  "coral",
+  "cromson",
+  "darkblue",
+  "slategrey",
+  "teal",
+  "darkgreen",
+  "darkmagenta",
+  "darkred",
+];
