@@ -12,6 +12,8 @@ import {
   LEDGER_TYPE_ICON,
 } from "@/app/Constants/constants";
 import Messages from "@/app/Constants/messages";
+import { TbEdit } from "react-icons/tb";
+import { MdDelete } from "react-icons/md";
 
 const LedgerPage = () => {
   const { ledgerId } = useParams();
@@ -130,6 +132,22 @@ const LedgerPage = () => {
               <div className={styles.getAndPayStatus}>
                 <div>Get</div>
                 <div>100</div>
+              </div>
+
+              <div className={styles.actionButtonWrapper}>
+                <div className={styles.editButonWrapper}>
+                  <div>
+                    <TbEdit />
+                  </div>
+                  <div>Edit</div>
+                </div>
+
+                <div className={styles.deleteButonWrapper}>
+                  <div>
+                    <MdDelete />
+                  </div>
+                  <div>Delete</div>
+                </div>
               </div>
             </div>
           ))}

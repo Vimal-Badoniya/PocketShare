@@ -35,11 +35,13 @@ const Dropdown: React.FC<DropdownProps> = ({
       {isOpen && (
         <div className={styles.dropdownContent}>
           {options.map((option) => (
-            <div key={option?.id} className={styles.optionWrapper}>
+            <div
+              key={option?.id}
+              className={styles.optionWrapper}
+              onClick={() => handleOptionClick(option)}
+            >
               {option?.icon && <div>{option?.icon}</div>}
-              <div onClick={() => handleOptionClick(option)}>
-                {option?.label}
-              </div>
+              <div>{option?.label}</div>
             </div>
           ))}
         </div>

@@ -3,7 +3,10 @@ import Modal from "../../common/Modal/Modal";
 import { useParams } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/app/redux/store";
-import { addNewTransactionField } from "@/app/redux/slices/newExpenseSlice";
+import {
+  addNewTransactionField,
+  resetTransactionFields,
+} from "@/app/redux/slices/newExpenseSlice";
 import { Transaction } from "@/app/Constants/interfaces";
 import { addExpense } from "@/app/api/ledgers/addExpense";
 import { v4 as uuidv4 } from "uuid";
@@ -39,6 +42,7 @@ export default function NewExpenseModal({
       getLedgerList().then((ledgers) => {
         dispatch(setLedgerList(ledgers));
       });
+      dispatch(resetTransactionFields());
       onModalClose();
     } catch (error) {
       console.error("Error saving Expense:", error);

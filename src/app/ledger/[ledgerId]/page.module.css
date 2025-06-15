@@ -101,3 +101,18 @@
 .tab:hover {
   background-color: var(--ledger-bg);
 }
+
+.actionButtonWrapper {
+  display: flex;
+  align-items: center;
+}
+
+.editButonWrapper {
+  display: flex;
+  align-items: center;
+}
+
+.deleteButonWrapper {
+  display: flex;
+  align-items: center;
+}

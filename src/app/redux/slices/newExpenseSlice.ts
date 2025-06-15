@@ -20,8 +20,14 @@ const newTransactionSlice = createSlice({
       const { fieldType, value } = action.payload;
       (state[fieldType] as typeof value) = value;
     },
+
+    resetTransactionFields: (state) => {
+      state = DEFAULT_EMPTY_TRANSACTION;
+      return state;
+    },
   },
 });
 
-export const { addNewTransactionField } = newTransactionSlice.actions;
+export const { addNewTransactionField, resetTransactionFields } =
+  newTransactionSlice.actions;
 export default newTransactionSlice.reducer;

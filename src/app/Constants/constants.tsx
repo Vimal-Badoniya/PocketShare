@@ -21,6 +21,7 @@ import { RiFolderReceivedLine } from "react-icons/ri";
 import { FaChartPie } from "react-icons/fa";
 import { GrTransaction } from "react-icons/gr";
 import { VscRobot } from "react-icons/vsc";
+import { FaCarSide } from "react-icons/fa";
 
 export const GROUP = "GROUP";
 export const TIMEFRAME = "TIMEFRAME";
@@ -95,6 +96,7 @@ export const INVESTMENT = "INVESTMENT";
 export const VEGETABLE = "VEGETABLE";
 export const RECEIVABLES = "RECEIVABLES";
 export const OTHERS = "OTHERS";
+export const VEHICLE = "VEHICLE";
 
 export const LEDGER_TYPE_ICON = {
   [TRIP]: <FaPlaneDeparture />,
@@ -118,6 +120,7 @@ export const EXPENSE_CATEGORY_ICON = {
   [VEGETABLE]: <GiFruitBowl />,
   [RECEIVABLES]: <RiFolderReceivedLine />,
   [OTHERS]: <FcLock />,
+  [VEHICLE]: <FaCarSide />,
 };
 
 export const EXPENSE_CATEGORY: ExpenseCategoryType[] = [
@@ -210,6 +213,12 @@ export const EXPENSE_CATEGORY: ExpenseCategoryType[] = [
     value: RECEIVABLES,
     label: "Receivables (Loan to Friend/Family etc)",
     icon: <RiFolderReceivedLine />,
+  },
+  {
+    id: VEHICLE,
+    value: VEHICLE,
+    label: "Vehicle",
+    icon: <FaCarSide />,
   },
   {
     id: OTHERS,
